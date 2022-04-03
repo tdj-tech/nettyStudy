@@ -48,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/tuo/netty/learn/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1252">
-              <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+            <state relative-caret-position="334">
+              <caret line="76" column="5" selection-start-line="73" selection-start-column="93" selection-end-line="76" selection-end-column="5" />
               <folding>
                 <element signature="e#844#1099#0" expanded="true" />
                 <element signature="e#1098#1099#0" expanded="true" />
@@ -214,7 +214,7 @@
       <option name="presentableId" value="Default" />
       <updated>1648820614194</updated>
       <workItem from="1648820748446" duration="3517000" />
-      <workItem from="1648969422606" duration="6396000" />
+      <workItem from="1648969422606" duration="6771000" />
     </task>
     <task id="LOCAL-00001" summary="netty learn first day">
       <created>1648975436943</created>
@@ -234,10 +234,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9913000" />
+    <option name="totallyTimeSpent" value="10288000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25340393" />
@@ -352,8 +352,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/tuo/netty/learn/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1252">
-          <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+        <state relative-caret-position="334">
+          <caret line="76" column="5" selection-start-line="73" selection-start-column="93" selection-end-line="76" selection-end-column="5" />
           <folding>
             <element signature="e#844#1099#0" expanded="true" />
             <element signature="e#1098#1099#0" expanded="true" />
