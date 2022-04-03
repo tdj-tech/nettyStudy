@@ -8,6 +8,7 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.ReferenceCountUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 /**
@@ -30,6 +31,8 @@ public class Server {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
+                            pipeline.addLast(new TankEncoder());
+                            pipeline.addLast(new TankDecoder());
                             pipeline.addLast(new ServerChildHandle());
                         }
                     }).bind(8888).sync(); // 不加sync，你就不知道端口是否绑定
@@ -56,22 +59,26 @@ class ServerChildHandle extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ByteBuf byteBuf = null;
+        TankMsg tankMsg;
         try {
-            byteBuf = (ByteBuf) msg;
-            byte[] bytes = new byte[byteBuf.readableBytes()];
-            byteBuf.getBytes(byteBuf.readerIndex(), bytes);
-            System.out.println(new String(bytes));
-            String content = new String(bytes);
-            if ("_bye_".equals(content)) {
-                Server.clents.remove(ctx);
-                ctx.close();
-            }
-            Server.clents.writeAndFlush(msg);
+            tankMsg = (TankMsg) msg;
+            System.out.println("server: " + tankMsg);
+//            byte[] bytes = new byte[byteBuf.readableBytes()];
+//            byteBuf.getBytes(byteBuf.readerIndex(), bytes);
+//            System.out.println(new String(bytes));
+//            String content = new String(bytes);
+//            if ("_bye_".equals(content)) {
+//                Server.clents.remove(ctx);
+//                ctx.close();
+//            }
+            Server.clents.writeAndFlush(new TankMsg(7, 7));
         } finally {
 //            if (byteBuf != null) {
 //                ReferenceCountUtil.release(byteBuf);
 //            }
+            if (msg != null) {
+                ReferenceCountUtil.release(msg);
+            }
         }
     }
 

@@ -27,6 +27,8 @@ public class Cilent {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
+                            pipeline.addLast(new TankDecoder());
+                            pipeline.addLast(new TankEncoder());
                             pipeline.addLast(new ClientChannelHandler());
                         }
                     }).connect("localhost", 8888)
@@ -47,21 +49,43 @@ class ClientChannelHandler extends ChannelInboundHandlerAdapter{
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         // channel 第一次连接上可用，输出一个字符串 bytebuf 直接访问内存，跳过gc
-        ByteBuf buf = Unpooled.copiedBuffer("hello".getBytes());
-        ctx.writeAndFlush(buf);
+//        ByteBuf buf = Unpooled.copiedBuffer("hello".getBytes());
+        ctx.writeAndFlush(new TankMsg(10, 10));
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf byteBuf = null;
+//        ByteBuf byteBuf = null;
+//        try {
+//            byteBuf = (ByteBuf) msg;
+//            byte[] bytes = new byte[byteBuf.readableBytes()];
+//            byteBuf.getBytes(byteBuf.readerIndex(), bytes);
+//            System.out.println(new String(bytes));
+//        } finally {
+//            if (byteBuf != null) {
+//                ReferenceCountUtil.release(byteBuf);
+//            }
+//        }
+
+        TankMsg tankMsg;
         try {
-            byteBuf = (ByteBuf) msg;
-            byte[] bytes = new byte[byteBuf.readableBytes()];
-            byteBuf.getBytes(byteBuf.readerIndex(), bytes);
-            System.out.println(new String(bytes));
+            tankMsg = (TankMsg) msg;
+            System.out.println("client: " + tankMsg);
+//            byte[] bytes = new byte[byteBuf.readableBytes()];
+//            byteBuf.getBytes(byteBuf.readerIndex(), bytes);
+//            System.out.println(new String(bytes));
+//            String content = new String(bytes);
+//            if ("_bye_".equals(content)) {
+//                Server.clents.remove(ctx);
+//                ctx.close();
+//            }
+//            Server.clents.writeAndFlush(tankMsg);
         } finally {
-            if (byteBuf != null) {
-                ReferenceCountUtil.release(byteBuf);
+//            if (byteBuf != null) {
+//                ReferenceCountUtil.release(byteBuf);
+//            }
+            if (msg != null) {
+                ReferenceCountUtil.release(msg);
             }
         }
 
