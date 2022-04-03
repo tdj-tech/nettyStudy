@@ -62,6 +62,11 @@ class ServerChildHandle extends ChannelInboundHandlerAdapter {
             byte[] bytes = new byte[byteBuf.readableBytes()];
             byteBuf.getBytes(byteBuf.readerIndex(), bytes);
             System.out.println(new String(bytes));
+            String content = new String(bytes);
+            if ("_bye_".equals(content)) {
+                Server.clents.remove(ctx);
+                ctx.close();
+            }
             Server.clents.writeAndFlush(msg);
         } finally {
 //            if (byteBuf != null) {
@@ -73,6 +78,7 @@ class ServerChildHandle extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
+        Server.clents.remove(ctx);
         ctx.close();
     }
 }
